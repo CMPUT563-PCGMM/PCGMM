@@ -46,17 +46,25 @@ def roomSplit(maps_lst):
     for amap in maps_lst:
         num_a = amap.shape[0]//room_length
         num_b = amap.shape[1]//room_width
-        rooms = np.empty((num_a*num_b, room_length,room_width),dtype=object)
+        rooms = list()
+        # rooms = np.empty((num_a*num_b, room_length,room_width),dtype=object)
         for i in range(num_a):
             for j in range(num_b):
                 a_start,a_end = i*room_length, (i+1)*room_length
                 b_start,b_end = j*room_width, (j+1)*room_width
-                rooms[i*num_a+j] = amap[a_start:a_end,b_start:b_end]
+                if amap[a_start,b_start] != "-":
+                    room = amap[a_start:a_end,b_start:b_end]
+                    room = room.reshape((1,room.shape[0],room.shape[1]))
+                    if type(rooms) == list:
+                        rooms = room
+                    else:
+                        rooms=np.append(rooms,room,axis=0)
+        # print(rooms.shape)
         if type(all_rooms) == list:
             all_rooms = rooms
         else:
             all_rooms = np.append(all_rooms,rooms, axis=0)
-        # print(all_rooms.shape)
+    # print(all_rooms.shape)
     return all_rooms
 
 
@@ -66,8 +74,7 @@ def data_split(maps_data):
     tr_idx = int(0.8*len(maps_data))
     va_length = int(0.1*len(maps_data))
 
-    print(tr_idx,va_length)
-
+    # print(tr_idx,va_length)
     training_data = maps_data[:tr_idx]
     validation_data = maps_data[tr_idx:(tr_idx+va_length)]
     testing_data = maps_data[(tr_idx+va_length):]
