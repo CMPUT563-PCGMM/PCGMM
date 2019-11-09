@@ -9,7 +9,8 @@ name_dict = {   'block.png':'B',
                 'monstor.png':'M',
                 'void.png':'-',
                 'wall.png':'W',
-                'water.png':'P'
+                'water.png':'P',
+                'stair.png':'S'
             }
 
 def getAllTileImg(path):
@@ -28,12 +29,13 @@ def showRoom(room,imgs_dic):
     for i in range(room.shape[0]):
         line_img = list()
         for j in range(room.shape[1]):
-            tile = imgs_dic[room[i][j]]
             if room[i][j] == 'O':
                 tile = imgs_dic['F']
             elif room[i][j] == 'I':
                 tile = imgs_dic['B']
-                
+            else:
+                tile = imgs_dic[room[i][j]]
+
             if type(line_img) == list:
                 line_img = tile
             else:
