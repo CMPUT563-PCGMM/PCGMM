@@ -3,13 +3,6 @@ import numpy as np
 import os
 import mapProcessor as mp 
 
-# w, h = 512, 512
-# data = np.zeros((h, w, 3), dtype=np.uint8)
-# data[256, 256] = [255, 0, 0]
-# img = Image.fromarray(data, 'RGB')
-# img.save('my.png')
-# img.show()
-
 name_dict = {   'block.png':'B',
                 'door.png':'D',
                 'floor.png':'F',
@@ -28,11 +21,6 @@ def getAllTileImg(path):
 
 def readOneTileImg(path,fileName):
     pic = np.asarray(Image.open(path + "/" + fileName))
-    # pic2 = np.asarray(Image.open("../data/pics/floor.png"))
-    # _all = np.append(pic,pic2,axis=0)
-    # print(np.asarray(_all).shape)
-    # img = Image.fromarray(pic, 'RGB')
-    # img.show()
     return pic
 
 def showRoom(room,imgs_dic):
@@ -41,6 +29,11 @@ def showRoom(room,imgs_dic):
         line_img = list()
         for j in range(room.shape[1]):
             tile = imgs_dic[room[i][j]]
+            if room[i][j] == 'O':
+                tile = imgs_dic['F']
+            elif room[i][j] == 'I':
+                tile = imgs_dic['B']
+                
             if type(line_img) == list:
                 line_img = tile
             else:
