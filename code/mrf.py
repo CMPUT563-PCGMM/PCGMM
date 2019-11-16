@@ -74,7 +74,7 @@ class MRF:
             m[mp.door_loc[i]]=door
         return m
 
-    def sample(self): 
+    def sample(self,imgs_dic): 
         m = self.sampleBorder()
 
         for i in range(self.thick,self.height-self.thick):
@@ -94,7 +94,6 @@ class MRF:
                         break
 
         ig.showRoom(m,imgs_dic)
-
 
         bool_pos_select = np.zeros((self.height,self.width))
         j = 0
@@ -149,14 +148,3 @@ class MRF:
 
         return m_new
 
-if __name__ == "__main__":
-    maps_data = mp.readMaps("../data/CMPUT563_Change_tile/Processed_changed_tiles_reduced_OI")
-    rooms = mp.roomSplit(maps_data)
-    training_data, validation_data, testing_data = mp.data_split(rooms)
-    imgs_dic = ig.getAllTileImg("../data/pics")
-
-    # swap each location _b times
-    mrf = MRF(_b = 0)
-    mrf.train(training_data)
-    m = mrf.sample()
-    ig.showRoom(m,imgs_dic)
