@@ -93,6 +93,9 @@ class MRF:
                         m[i,j] = sorted_pos_t[idx]
                         break
 
+        ig.showRoom(m,imgs_dic)
+
+
         bool_pos_select = np.zeros((self.height,self.width))
         j = 0
         BORDER_COUNT = 92
@@ -153,7 +156,7 @@ if __name__ == "__main__":
     imgs_dic = ig.getAllTileImg("../data/pics")
 
     # swap each location _b times
-    mrf = MRF(_b = 999)
+    mrf = MRF(_b = 0)
     mrf.train(training_data)
     m = mrf.sample()
     ig.showRoom(m,imgs_dic)
