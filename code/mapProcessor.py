@@ -2,27 +2,51 @@ import os
 import random
 import numpy as np
 
-'''
-    In terms of functionality,
-    'F' = 'O'
-    'B' = 'I'
-    'M' = 'P'
-'''
 tileTypes = {
     "F": "FLOOR",
     "B": "BLOCK",
     "M": "MONSTER",
     "P": "ELEMENT (LAVA, WATER)",
-    "O": "ELEMENT + FLOOR (LAVA/BLOCK, WATER/BLOCK)",
-    "I": "ELEMENT + BLOCK",
+    "A": "BREAKABLE WALL",
+    "C": "MOVABLE BLOCK",
+    "U": "single arrow, out - go out of this room",
+    "N": "single arrow, in - go in to this room",
+    "E": "double arrow - go in and out of this room",
     "D": "DOOR",
     "S": "STAIR",
     "W": "WALL",
     "-": "VOID"
 }
 
+indoor_tileTypes = {
+    "F": "FLOOR",
+    "B": "BLOCK",
+    "M": "MONSTER",
+    "P": "ELEMENT (LAVA, WATER)",
+    "C": "MOVABLE BLOCK",
+    "S": "STAIR",
+    "-": "VOID"
+}
+
+border_tileTypes = {
+    "A": "BREAKABLE WALL",
+    "U": "single arrow, out - go out of this room",
+    "N": "single arrow, in - go in to this room",
+    "E": "double arrow - go in and out of this room",
+    "D": "DOOR",
+    "W": "WALL",
+}
+
 ROOMHEIGHT = 16
 ROOMWIDTH = 11
+ROOMBORDER = 2
+
+door_loc = np.zeros((4,ROOMHEIGHT,ROOMWIDTH))
+door_loc[0][1,4:7] = 1
+door_loc[1][-2,4:7] = 1
+door_loc[2][7:9,1] = 1
+door_loc[3][7:9,-2] = 1
+door_loc = (door_loc == 1)
 
 def readMaps(maps_path):
     '''
@@ -30,7 +54,7 @@ def readMaps(maps_path):
     '''
     maps_lst = []
     for fileName in os.listdir(maps_path):
-        if fileName == "README.txt":
+        if fileName == "README.txt" or fileName == "tiles_notation.txt":
             continue
         map_arr = readOneMap(maps_path,fileName)
         maps_lst.append(map_arr)
@@ -75,7 +99,7 @@ def roomSplit(maps_lst):
             all_rooms = rooms
         else:
             all_rooms = np.append(all_rooms,rooms, axis=0)
-    print(all_rooms.shape)
+    # print(all_rooms.shape)
     return all_rooms
 
 def data_split(maps_data):
@@ -95,5 +119,3 @@ def highLevelMapConv(ml,d,z,Th):
     for y in range(ml.shape[0]//ROOMHEIGHT):
         for x in range(ml.shape[1]//ROOMWIDTH):
             pass
-
-# def 

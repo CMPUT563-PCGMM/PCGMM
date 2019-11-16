@@ -3,14 +3,19 @@ import numpy as np
 import os
 import mapProcessor as mp 
 
-name_dict = {   'block.png':'B',
-                'door.png':'D',
+name_dict = {   'block.png':'B', # blue block
+                'door.png':'D',  
                 'floor.png':'F',
                 'monstor.png':'M',
                 'void.png':'-',
-                'wall.png':'W',
+                'wall.png':'W',  # blue wall
                 'water.png':'P',
-                'stair.png':'S'
+                'stair.png':'S',
+                'sarrowi.png':'N', # yellow wall
+                'sarrowo.png':'U', # light green wall
+                'darrow.png':'E', # grey wall
+                'bwall.png':'A',  # dark green wall with 'BR'
+                'mblock.png':'C' # green block 
             }
 
 def getAllTileImg(path):

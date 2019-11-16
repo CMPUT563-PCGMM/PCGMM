@@ -1,5 +1,4 @@
 import mapProcessor as mp 
-import eval
 import img_gen as ig
 
 if __name__ == "__main__":
@@ -10,4 +9,4 @@ if __name__ == "__main__":
 
     for room in rooms:
         ig.showRoom(room,imgs_dic)
-        # a = input()
+    
