@@ -3,6 +3,7 @@
 ## Image Generation
 Please use the following code to generate your image map
 * Be noted that you need to put the icons of tiles into "/data/pics/" folder
+* Be sure to also include 'mapProcessor.py' in your code folder
 
 ```python
 import img_gen as ig
