@@ -23,8 +23,8 @@ class MRF:
         sright = room[i+1][j]
         stop = room[i][j-1]
         sbtm = room[i][j+1]
-        # config = str(i)+"_"+str(j)+sleft+sright+stop+sbtm
-        config = sleft+sright+stop+sbtm
+        config = str(i)+"_"+str(j)+sleft+sright+stop+sbtm
+        # config = sleft+sright+stop+sbtm
         return config
 
     def train(self, training_data):

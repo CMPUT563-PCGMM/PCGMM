@@ -11,6 +11,6 @@ if __name__ == "__main__":
 
     # swap each location _b times
     mrf = MRF(_b = 999999)
-    mrf.train(training_data)
+    mrf.train(rooms)
     m = mrf.sample(imgs_dic)
     ig.showRoom(m,imgs_dic)
