@@ -5,7 +5,7 @@ import random
 import math 
 
 class MRF:
-    def __init__(self, _b):
+    def __init__(self, _b=999999):
         self.height = mp.ROOMHEIGHT
         self.width = mp.ROOMWIDTH
         self.thick = mp.ROOMBORDER
