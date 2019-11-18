@@ -107,15 +107,20 @@ class MRF:
                 bool_pos_select[h2,w2]=1
                 # print(h1,w1,h2,w2)
 
-                L_pre = self.getLogLike(h1,w1,h2,w2,m)
-                m = self.swapTile(h1,w1,h2,w2,m)
-                L_post = self.getLogLike(h2,w2,h1,w1,m)
-                prob = min(1,math.exp(L_post-L_pre))
-                do_swap = (random.random() < prob)
-                
-                if not do_swap:
-                    # print(prob)
+                t1,t2 = m[h1,w1],m[h2,w2]
+                if t1 != t2:
+                    # ig.showRoom(m,imgs_dic)
+                    L_pre = self.getLogLike(h1,w1,h2,w2,m)
                     m = self.swapTile(h1,w1,h2,w2,m)
+                    L_post = self.getLogLike(h2,w2,h1,w1,m)
+                    prob = min(1,math.exp(L_post-L_pre))
+                    do_swap = (random.random() <= prob)
+                    # print(do_swap)
+                    # print(prob,L_pre,L_post)
+                    # ig.showRoom(m,imgs_dic)
+                    # input()
+                    if not do_swap:
+                        m = self.swapTile(h1,w1,h2,w2,m)
             j+=1
         # print(m)
         return m
@@ -126,15 +131,16 @@ class MRF:
         c1,c2 = self.getConfig(h1,w1,m),self.getConfig(h2,w2,m)
         if t1+c1 in self.P.keys():
             L_1 = self.P[t1+c1]
-            # print(t1+c1,L_1)
+            # print('L1',t1+c1,L_1)
         else:
-            L_1 = 0.000001
+            L_1 = 0.001
         if t2+c2 in self.P.keys():
             L_2 = self.P[t2+c2]
-            # print(t2+c2,L_2)
+            # print('L2',t2+c2,L_2)
         else:
-            L_2 = 0.000001
+            L_2 = 0.001
         L = math.log(L_1)+math.log(L_2)
+        # print('L',L_1*L_2, L)
         return L
 
 

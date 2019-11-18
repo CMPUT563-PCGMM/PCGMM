@@ -10,7 +10,7 @@ if __name__ == "__main__":
     imgs_dic = ig.getAllTileImg("../data/pics")
 
     # swap each location _b times
-    mrf = MRF(_b = 999999)
+    mrf = MRF(_b = 9999999)
     mrf.train(rooms)
     m = mrf.sample(imgs_dic)
     ig.showRoom(m,imgs_dic)
