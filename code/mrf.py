@@ -129,20 +129,18 @@ class MRF:
         # tile1 and tile2
         t1,t2 = m[h1,w1],m[h2,w2]
         c1,c2 = self.getConfig(h1,w1,m),self.getConfig(h2,w2,m)
+        L_1 = 0.001
         if t1+c1 in self.P.keys():
             L_1 = self.P[t1+c1]
             # print('L1',t1+c1,L_1)
-        else:
-            L_1 = 0.001
+        L_2 = 0.001 
         if t2+c2 in self.P.keys():
             L_2 = self.P[t2+c2]
             # print('L2',t2+c2,L_2)
-        else:
-            L_2 = 0.001
+            
         L = math.log(L_1)+math.log(L_2)
         # print('L',L_1*L_2, L)
         return L
-
 
     def swapTile(self,h1,w1,h2,w2,m):
         t1,t2 = m[h1,w1],m[h2,w2]
@@ -154,3 +152,26 @@ class MRF:
 
         return m_new
 
+    def getRoomLogLike(self,m):
+        room_ll_dict = dict()
+        for i in range(self.thick,self.height-self.thick):
+            for j in range(self.thick,self.width-self.thick):
+                pos = str(i)+"_"+str(j)
+                t = m[i][j]
+                c = self.getConfig(i,j,m)
+                L = 0.00001
+                if t+c in self.P.keys():
+                    L = self.P[t+c]
+                room_ll_dict[pos]=L
+        return room_ll_dict
+
+    def getTrainAvgLogLike(self,rooms):
+        import pandas as pd
+
+        dicts = list()
+        for m in rooms:
+            room_ll_dict = self.getRoomLogLike(m)
+            dicts.append(room_ll_dict)
+        
+        df = pd.DataFrame(dicts)
+        return dict(df.mean())
