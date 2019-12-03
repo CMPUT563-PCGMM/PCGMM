@@ -42,8 +42,8 @@ ROOMWIDTH = 11
 ROOMBORDER = 2
 
 door_loc = np.zeros((4,ROOMHEIGHT,ROOMWIDTH))
-door_loc[0][1,4:7] = 1
-door_loc[1][-2,4:7] = 1
+door_loc[0][1,5] = 1
+door_loc[1][-2,5] = 1
 door_loc[2][7:9,1] = 1
 door_loc[3][7:9,-2] = 1
 door_loc = (door_loc == 1)

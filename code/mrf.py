@@ -162,7 +162,7 @@ class MRF:
                 L = 0.00001
                 if t+c in self.P.keys():
                     L = self.P[t+c]
-                room_ll_dict[pos]=L
+                room_ll_dict[pos]=math.log(L)
         return room_ll_dict
 
     def getTrainAvgLogLike(self,rooms):
