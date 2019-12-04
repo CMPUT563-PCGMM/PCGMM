@@ -11,6 +11,8 @@ class MRF:
         self.thick = mp.ROOMBORDER
         self.IT = mp.indoor_tileTypes
         self.BT = mp.border_tileTypes
+        self.BorderProbCount = [dict(),dict(),dict(),dict()]
+        self.BorderProb = [dict(),dict(),dict(),dict()]
         self.b = _b
         # network structure P(Sx,y |Sx−1,y, Sx+1,y, Sx,y−1, Sx,y+1)
         self.S = dict()
@@ -28,7 +30,22 @@ class MRF:
         return config
 
     def train(self, training_data):
+        # find border probabilities
+        num_rooms=len(training_data)
+        for room in training_data:
+            doors = list()
+            doors= [room[1,5],room[-2,5],room[7,1],room[7,-2]]
+            for i in range(len(doors)):
+                if doors[i] not in self.BorderProbCount[i].keys():
+                    self.BorderProbCount[i][doors[i]]=1
+                else:
+                    self.BorderProbCount[i][doors[i]]+=1
 
+        for i in range(len(self.BorderProbCount)):
+            for tile in self.BorderProbCount[i].keys():
+                self.BorderProb[i][tile]=self.BorderProbCount[i][tile]/num_rooms
+        
+        # find indoor probabilities
         for room in training_data:
             for i in range(self.thick,self.height-self.thick):
                 for j in range(self.thick,self.width-self.thick):
@@ -70,7 +87,10 @@ class MRF:
         m = np.empty([self.height, self.width], dtype = str)
         m[:] = 'W'
         for i in range(4):
-            door = random.choice(list(self.BT.keys()))
+            # door = random.choice(list(self.BT.keys()))
+            from numpy.random import choice
+            door = choice(list(self.BorderProb[i].keys()), 1,
+              p=list(self.BorderProb[i].values()))
             m[mp.door_loc[i]]=door
         return m
 
