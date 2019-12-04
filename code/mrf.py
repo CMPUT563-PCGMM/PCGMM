@@ -82,7 +82,6 @@ class MRF:
         # print(self.P_pos)
         return
 
-    # Future work: can also bulid a Markov model for the border
     def sampleBorder(self):
         m = np.empty([self.height, self.width], dtype = str)
         m[:] = 'W'
@@ -182,7 +181,7 @@ class MRF:
                 L = 0.00001
                 if t+c in self.P.keys():
                     L = self.P[t+c]
-                room_ll_dict[pos]=math.log(L)
+                room_ll_dict[t+c]=math.log(L)
         return room_ll_dict
 
     def getTrainAvgLogLike(self,rooms):
